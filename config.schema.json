@@ -29,10 +29,6 @@
                   "enum": ["bot"]
                 },
                 {
-                  "title": "Humidifier",
-                  "enum": ["humidifier"]
-                },
-                {
                   "title": "Meter",
                   "enum": ["meter"]
                 },
