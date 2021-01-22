@@ -28,6 +28,9 @@
     "build": "rimraf ./dist && tsc",
     "prepublishOnly": "npm run lint && npm run build"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "homebridge-plugin",
     "switchbot",
