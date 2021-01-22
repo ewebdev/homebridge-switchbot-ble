@@ -1,6 +1,6 @@
 {
   "name": "@switchbot/homebridge-switchbot-ble",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "Homebridge integration for SwitchBot BLE series products",
   "author": "SwitchBot <support@wondertechlabs.com> (https://github.com/SwitchBot)",
   "license": "ISC",
@@ -23,6 +23,7 @@
   "main": "dist/switchbot-platform.js",
   "scripts": {
     "lint": "eslint src/**.ts",
+    "update": "npm update && npm install",
     "watch": "npm run build && npm link && nodemon",
     "build": "rimraf ./dist && tsc",
     "prepublishOnly": "npm run lint && npm run build"
@@ -33,14 +34,14 @@
     "ble"
   ],
   "devDependencies": {
-    "@types/node": "^14.14.14",
-    "@typescript-eslint/eslint-plugin": "^4.11.0",
-    "@typescript-eslint/parser": "^4.11.0",
-    "eslint": "^7.16.0",
-    "eslint-plugin-prettier": "^3.3.0",
+    "@types/node": "^14.14.22",
+    "@typescript-eslint/eslint-plugin": "^4.14.0",
+    "@typescript-eslint/parser": "^4.14.0",
+    "eslint": "^7.18.0",
+    "eslint-plugin-prettier": "^3.3.1",
     "homebridge": "^1.1.7",
     "homebridge-config-ui-x": "^4.36.0",
-    "nodemon": "^2.0.6",
+    "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "ts-node": "^9.1.1",
@@ -48,6 +49,6 @@
   },
   "dependencies": {
     "@abandonware/noble": "^1.9.2-10",
-    "node-switchbot": "0.2.0"
+    "node-switchbot": "1.0.0"
   }
 }

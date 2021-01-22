@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. This project uses [Semantic Versioning](https://semver.org/)
 
+## [Version 1.2.8](https://github.com/OpenWonderLabs/homebridge-switchbot-ble/releases) (2021-01-21)
+
+### Changes
+
+- Update Dependencies
+    - Node-SwitchBot v1.0.0
+        - Fix for "No device was found" in MacOS
+
 ## [Version 1.2.7](https://github.com/OpenWonderLabs/homebridge-switchbot-ble/releases) (2020-12-22)
 
 ### Changes
