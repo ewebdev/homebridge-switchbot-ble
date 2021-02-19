@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. This project uses [Semantic Versioning](https://semver.org/)
 
-## [Version 1.2.10](https://github.com/OpenWonderLabs/homebridge-switchbot-ble/releases) (2021-02-XX)
+## [Version 1.2.10](https://github.com/OpenWonderLabs/homebridge-switchbot-ble/releases) (2021-02-19)
 
 ### Changes
 
