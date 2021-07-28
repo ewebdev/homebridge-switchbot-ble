@@ -18,7 +18,7 @@ class PluginUiServer extends HomebridgePluginUiServer {
     this.onRequest('/getCachedAccessories', async () => {
       try {
         // Define the plugin and create the array to return
-        const plugin = 'homebridge-honeywell-home';
+        const plugin = '@switchbot/homebridge-switchbot-ble';
         const devicesToReturn = [];
 
         // The path and file of the cached accessories

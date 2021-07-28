@@ -85,27 +85,6 @@
    ; (async () => {
       try {
          const currentConfig = await homebridge.getPluginConfig()
-         window.addEventListener('message', async e => {
-            try {
-               if (e.origin !== 'https://homebridge-honeywell.iot.oz.nu') {
-                  // throw new Error('Refusing to process message from ' + e.origin)
-                  return
-               }
-               clearInterval(this.originCheckInterval)
-               if (this.popup) {
-                  this.popup.close()
-               }
-               const data = JSON.parse(e.data)
-               currentConfig[0].credentials = data
-               await homebridge.updatePluginConfig(currentConfig)
-               await homebridge.savePluginConfig()
-               document.getElementById('linkButton').style.display = 'none'
-                document.getElementById('unLinkButton').style.display = 'none'
-            } catch (err) {
-               console.error(err)
-               homebridge.toast.error('Try again, or see the console message for info.', 'Error')
-            }
-         }, false)
          showIntro = () => {
             const introLink = document.getElementById('introLink')
             introLink.addEventListener('click', () => {
