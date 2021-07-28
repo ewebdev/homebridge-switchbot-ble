@@ -10,7 +10,6 @@ import {
   Service,
   CharacteristicEventTypes,
 } from "homebridge";
-import { rejects } from "assert";
 
 export class Meter implements AccessoryPlugin {
   private readonly log: Logging;

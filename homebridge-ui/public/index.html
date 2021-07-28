@@ -1,0 +1,171 @@
+<p class="text-center">
+   <img
+      src="https://raw.githubusercontent.com/OpenWonderLabs/homebridge-switchbot-openapi/main/switchbot/Homebridge_x_SwitchBot.svg"
+      alt="homebridge-honeywell-home logo" style="width: 60%;" />
+</p>
+<div id="pageIntro" style="display: none;">
+   <p class="lead text-center">Thank you for installing <strong>homebridge-switchbot-ble</strong></p>
+   <p class="lead text-center">Before continuing:</p>
+   <ol>
+      <li class="mb-3">Download the SwitchBot App from either the <a href="https://apps.apple.com/us/app/switchbot/id1087374760" target="_blank"
+            rel="noreferrer noopener">App Store</a> or the <a href="https://play.google.com/store/apps/details?id=com.theswitchbot.switchbot&hl=en_US&gl=US" target="_blank"
+            rel="noreferrer noopener">Play Store</a>.</li>
+      <li class="mb-3">Select <strong>the SwitchBot Device you would like to add to homebridge</strong>.</li>
+      <li class="mb-3">Select the settings gear in the top right.</li>
+      <li class="mb-3">Select Device info.</li>
+      <li class="mb-3">Copy the BLE Mac and input into the Mac Address - Bluetooth field on the next page.</li>
+   </ol>
+   <div class="text-center">
+      <button type="button" class="btn btn-primary" id="introLink">Continue &rarr;</button>
+   </div>
+</div>
+<div id="menuWrapper" class="btn-group w-100 mb-0" role="group" aria-label="UI Menu" style="display: none;">
+   <button type="button" class="btn btn-primary" id="menuSettings">
+      Settings
+   </button>
+   <button type="button" class="btn btn-primary mr-0" id="menuHome">
+      Support
+   </button>
+</div>
+<div id="disabledBanner" class="alert alert-secondary mb-0 mt-3" role="alert" style="display: none;">
+   Plugin is currently disabled
+   <button id="disabledEnable" type="button" class="btn btn-link p-0 m-0 float-right">
+      Enable
+   </button>
+</div>
+<div id="pageSupport" class="mt-4" style="display: none;">
+   <p class="text-center lead">Thank you for using <strong>homebridge-switchbot-ble</strong></p>
+   <p class="text-center">The links below will take you to our GitHub wiki</p>
+   <h5>Setup</h5>
+   <ul>
+      <li>
+         <a href="https://github.com/OpenWonderLabs/homebridge-switchbot-ble/wiki" target="_blank">Wiki Home</a>
+      </li>
+      <li>
+         <a href="https://github.com/OpenWonderLabs/homebridge-switchbot-ble/wiki/Configuration"
+            target="_blank">Configuration</a>
+      </li>
+      <li>
+         <a href="https://github.com/OpenWonderLabs/homebridge-switchbot-ble/wiki/Beta-Version" target="_blank">Beta
+            Version</a>
+      </li>
+      <li>
+         <a href="https://github.com/OpenWonderLabs/homebridge-switchbot-ble/wiki/Node-Version" target="_blank">Node
+            Version</a>
+      </li>
+      <li>
+         <a href="https://github.com/OpenWonderLabs/homebridge-switchbot-ble/wiki/Uninstallation"
+            target="_blank">Uninstallation</a>
+      </li>
+   </ul>
+   <h5>Features</h5>
+   <ul>
+      <li>
+         <a href="https://github.com/OpenWonderLabs/homebridge-switchbot-ble/wiki/Supported-Devices"
+            target="_blank">Supported Devices</a>
+      </li>
+      <li>
+         <a href="https://github.com/OpenWonderLabs/homebridge-switchbot-ble/wiki/Fan-Modes" target="_blank">Fan
+            Modes</a>
+      </li>
+   </ul>
+   <h5>Help/About</h5>
+   <ul>
+      <li>
+         <a href="https://github.com/OpenWonderLabs/homebridge-switchbot-ble/issues/new/choose" target="_blank">Support
+            Request</a>
+      </li>
+      <li>
+         <a href="https://github.com/OpenWonderLabs/homebridge-switchbot-ble/blob/master/CHANGELOG.md"
+            target="_blank">Changelog</a>
+      </li>
+   </ul>
+</div>
+<script>
+   ; (async () => {
+      try {
+         const currentConfig = await homebridge.getPluginConfig()
+         window.addEventListener('message', async e => {
+            try {
+               if (e.origin !== 'https://homebridge-honeywell.iot.oz.nu') {
+                  // throw new Error('Refusing to process message from ' + e.origin)
+                  return
+               }
+               clearInterval(this.originCheckInterval)
+               if (this.popup) {
+                  this.popup.close()
+               }
+               const data = JSON.parse(e.data)
+               currentConfig[0].credentials = data
+               await homebridge.updatePluginConfig(currentConfig)
+               await homebridge.savePluginConfig()
+               document.getElementById('linkButton').style.display = 'none'
+                document.getElementById('unLinkButton').style.display = 'none'
+            } catch (err) {
+               console.error(err)
+               homebridge.toast.error('Try again, or see the console message for info.', 'Error')
+            }
+         }, false)
+         showIntro = () => {
+            const introLink = document.getElementById('introLink')
+            introLink.addEventListener('click', () => {
+               homebridge.showSpinner()
+               document.getElementById('pageIntro').style.display = 'none'
+               document.getElementById('menuWrapper').style.display = 'inline-flex'
+               showSettings()
+               homebridge.hideSpinner()
+            })
+            document.getElementById('pageIntro').style.display = 'block'
+         }
+         showSupport = () => {
+            homebridge.showSpinner()
+            homebridge.hideSchemaForm()
+            document.getElementById('menuHome').classList.add('btn-elegant')
+            document.getElementById('menuHome').classList.remove('btn-primary')
+            document.getElementById('menuSettings').classList.remove('btn-elegant')
+            document.getElementById('menuSettings').classList.add('btn-primary')
+            document.getElementById('pageSupport').style.display = 'block'
+            homebridge.hideSpinner()
+         }
+         showSettings = () => {
+            homebridge.showSpinner()
+            document.getElementById('menuHome').classList.remove('btn-elegant')
+            document.getElementById('menuHome').classList.add('btn-primary')
+            document.getElementById('menuSettings').classList.add('btn-elegant')
+            document.getElementById('menuSettings').classList.remove('btn-primary')
+            document.getElementById('pageSupport').style.display = 'none'
+            homebridge.showSchemaForm()
+            homebridge.hideSpinner()
+         }
+         showDisabledBanner = () => {
+            document.getElementById('disabledBanner').style.display = 'block'
+         }
+         enablePlugin = async () => {
+            homebridge.showSpinner()
+            document.getElementById('disabledBanner').style.display = 'none'
+            currentConfig[0].disablePlugin = false
+            await homebridge.updatePluginConfig(currentConfig)
+            await homebridge.savePluginConfig()
+            homebridge.hideSpinner()
+         }
+         menuHome.addEventListener('click', () => showSupport())
+         menuSettings.addEventListener('click', () => showSettings())
+         disabledEnable.addEventListener('click', () => enablePlugin())
+         if (currentConfig.length) {
+            document.getElementById('menuWrapper').style.display = 'inline-flex'
+            showSettings()
+            if (currentConfig[0].disablePlugin) {
+               showDisabledBanner()
+            }
+         } else {
+            currentConfig.push({ name: 'SwitchBotPlatform' })
+            await homebridge.updatePluginConfig(currentConfig)
+            showIntro()
+         }
+      } catch (err) {
+         homebridge.toast.error(err.message, 'Error')
+      } finally {
+         homebridge.hideSpinner()
+      }
+   })()
+</script>

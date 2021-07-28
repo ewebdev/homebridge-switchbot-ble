@@ -12,7 +12,6 @@ import {
   Service,
   CharacteristicEventTypes,
 } from "homebridge";
-import { rejects } from "assert";
 
 export class Bot implements AccessoryPlugin {
   private readonly log: Logging;

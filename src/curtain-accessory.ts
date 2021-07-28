@@ -12,7 +12,6 @@ import {
   Service,
   CharacteristicEventTypes,
 } from "homebridge";
-import { rejects } from "assert";
 
 export class Curtain implements AccessoryPlugin {
   private readonly log: Logging;

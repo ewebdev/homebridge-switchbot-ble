@@ -6,7 +6,6 @@ import { AccessoryPlugin, API, HAP, Logging, PlatformConfig, StaticPlatformPlugi
 import { Bot } from "./bot-accessory";
 import { Curtain } from "./curtain-accessory";
 import { Meter } from "./meter-accessory";
-import { off } from "process";
 
 const PLATFORM_NAME = "SwitchBotPlatform";
 
