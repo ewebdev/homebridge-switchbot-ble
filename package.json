@@ -1,6 +1,6 @@
 {
   "name": "@switchbot/homebridge-switchbot-ble",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Homebridge integration for SwitchBot BLE series products",
   "author": "SwitchBot <support@wondertechlabs.com> (https://github.com/SwitchBot)",
   "license": "ISC",
@@ -33,7 +33,7 @@
     "ble"
   ],
   "devDependencies": {
-    "@types/node": "^16.4.3",
+    "@types/node": "^16.4.7",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
     "eslint": "^7.31.0",
@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@abandonware/noble": "^1.9.2-14",
-    "node-switchbot": "1.0.0",
+    "node-switchbot": "1.0.3",
     "@homebridge/plugin-ui-utils": "0.0.19"
   }
 }

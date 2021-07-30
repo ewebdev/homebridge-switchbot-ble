@@ -4,6 +4,8 @@
 /* eslint-disable prefer-const */
 import { AccessoryPlugin, API, HAP, Logging, PlatformConfig, StaticPlatformPlugin } from "homebridge";
 import { Bot } from "./bot-accessory";
+import { Contact } from "./contact-accessory";
+import { Motion } from "./motion-accessory";
 import { Curtain } from "./curtain-accessory";
 import { Meter } from "./meter-accessory";
 
@@ -54,7 +56,7 @@ class SwitchBotPlatform implements StaticPlatformPlugin {
 
   /*
    * This method is called to retrieve all accessories exposed by the platform.
-   * The Platform can delay the response my invoking the callback at a later time,
+   * The Platform can delay the response by invoking the callback at a later time,
    * it will delay the bridge startup though, so keep it to a minimum.
    * The set of exposed accessories CANNOT change over the lifetime of the plugin!
    */
@@ -62,11 +64,15 @@ class SwitchBotPlatform implements StaticPlatformPlugin {
     let deviceList = [];
     if (this.config.devices) {
       for (var device of this.config.devices) {
-        // this.log.info(device.type);
-        // this.log.info(device.name);
-        // this.log.info(device.bleMac);
-        // this.log.info(device.scanDuration, typeof device.scanDuration);
+        this.log.debug(device.type);
+        this.log.debug(device.name);
+        this.log.debug(device.bleMac);
+        this.log.debug(device.scanDuration, typeof device.scanDuration);
         let scanDuration: number = device.scanDuration || 1000;
+        let scanInterval: number = device.scanInterval || 60000;
+        if (scanInterval < scanDuration) {
+          scanInterval = scanDuration + 1000;
+        }
         switch (device.type) {
           case "bot":
             deviceList.push(new Bot(hap, this.log, device.name, device.bleMac.toLowerCase(), scanDuration));
@@ -74,15 +80,18 @@ class SwitchBotPlatform implements StaticPlatformPlugin {
           case "curtain":
             const reverseDir: boolean = device.reverseDir || false;
             const moveTime: number = device.moveTime || 2000;
-            deviceList.push(new Curtain(hap, this.log, device.name, device.bleMac.toLowerCase(), scanDuration, reverseDir, moveTime));
-            break;
+            deviceList.push(new Curtain(hap, this.log, device.name, device.bleMac.toLowerCase(), 
+              scanDuration, reverseDir, moveTime, device.scanInterval || 60000, device.openCloseThreshold || 5));
+            break; 
           case "meter":
-            let scanInterval: number = device.scanInterval || 60000;
-            if (scanInterval < scanDuration) {
-              scanInterval = scanDuration + 1000;
-            }
             deviceList.push(new Meter(hap, this.log, device.name, device.bleMac.toLowerCase(), scanDuration, scanInterval));
             break;
+          case "motion":
+            deviceList.push(new Motion(hap, this.log, device.name, device.bleMac.toLowerCase(), scanDuration, scanInterval));
+            break;
+          case "contact":
+            deviceList.push(new Contact(hap, this.log, device.name, device.bleMac.toLowerCase(), scanDuration, scanInterval));
+            break;    
           default:
             break;
         }

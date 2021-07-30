@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. This project uses [Semantic Versioning](https://semver.org/)
 
+## [Version 1.5.0](https://github.com/OpenWonderLabs/homebridge-switchbot-ble/releases/tag/v1.5.0) (2021-07-30)
+
+### Changes
+
+- Set current position to actual device position (#193) 
+- add configurable "open/close threshold" (#211)
+- House Keeping and Update dependencies.
+
 ## [Version 1.4.1](https://github.com/OpenWonderLabs/homebridge-switchbot-ble/releases/tag/v1.4.1) (2021-07-28)
 
 ### Changes
