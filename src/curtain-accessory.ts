@@ -60,7 +60,7 @@ class Device {
     const switchbot = new SwitchBot();
 
     return switchbot
-      .discover({duration: this.scanDuration, model: "c", quick: false})
+      .discover({ duration: this.scanDuration, model: "c", quick: false })
       .then((device_list: any) => {
         let targetDevice: any = null;
 
@@ -131,7 +131,7 @@ class Device {
       switchbot.onadvertisement = (ad: any) => {
         this.applyPosition(ad);
       };
-      switchbot.startScan({id: this.bleMac})
+      switchbot.startScan({ id: this.bleMac })
         .then(() => {
           return switchbot.wait(this.scanDuration);
         })
@@ -244,18 +244,22 @@ export class Curtain implements AccessoryPlugin {
 
     this.currentPositionCharacteristic
       .on(CharacteristicEventTypes.GET, (callback: CharacteristicGetCallback) => {
-        log.info("Current position of Curtain was returned: " + this.currentPosition + "%");
+        if (this.currentPosition != this.targetPosition) {
+          log.info("Current position of %s was returned: %s", this.name, this.currentPosition);
+        }
         callback(undefined, this.currentPosition);
       });
 
     this.targetPositionCharacteristic
       .on(CharacteristicEventTypes.GET, (callback: CharacteristicGetCallback) => {
-        log.info("Target position of Curtain was returned: " + this.targetPosition + "%");
+        if (this.targetPosition != this.currentPosition) {
+          log.info("Target position of %s was returned: %s", this.name, this.targetPosition);
+        }
         callback(undefined, this.targetPosition);
       })
       .on(CharacteristicEventTypes.SET, (value: CharacteristicValue, callback: CharacteristicSetCallback) => {
         this.targetPosition = value as number;
-        log.info("Target position of Curtain setting: " + this.targetPosition + "%");
+        log.info("Target position of %s setting: %s", this.name, this.targetPosition);
         clearTimeout(this.moveTimer);
         if (this.targetPosition > this.currentPosition) {
           this.positionState = hap.Characteristic.PositionState.INCREASING;
@@ -274,7 +278,7 @@ export class Curtain implements AccessoryPlugin {
           this.device.runToPosition(this.convertFromHomeKitPosition(this.targetPosition))
             .then(() => {
               log.info("Done.");
-              log.info("Target position of Curtain has been set to: " + this.targetPosition + "%");
+              log.info("Target position of %s has been set to: %s", this.name, this.targetPosition);
               this.moveTimer = setTimeout(() => {
                 // log.info("setTimeout", this.positionState.toString(), this.currentPosition.toString(), this.targetPosition.toString());
                 this.positionState = hap.Characteristic.PositionState.STOPPED;
@@ -293,7 +297,7 @@ export class Curtain implements AccessoryPlugin {
                 // this.curtainService?.getCharacteristic(hap.Characteristic.CurrentPosition).updateValue(this.currentPosition);
                 this.positionStateCharacteristic.updateValue(this.positionState);
               }, 1000);
-              log.info("Target position of Curtain failed to be set to: " + this.targetPosition + "%");
+              log.info("Target position of %s failed to be set to: %s", this.name, this.targetPosition);
               callback();
             });
         }
@@ -301,7 +305,7 @@ export class Curtain implements AccessoryPlugin {
 
     this.positionStateCharacteristic
       .on(CharacteristicEventTypes.GET, (callback: CharacteristicGetCallback) => {
-        log.info("The position state of Curtain was returned: " + this.positionState);
+        log.debug("The Position state of %s was returned: %s", this.name, this.positionState);
         callback(undefined, this.positionState);
       });
 
