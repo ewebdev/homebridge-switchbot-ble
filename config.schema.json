@@ -65,7 +65,7 @@
             "bleMac": {
               "type": "string",
               "required": true,
-              "title": "Mac Address - Bluetooth",
+              "title": "MAC Address - Bluetooth",
               "placeholder": "d4:cc:43:97:ae:2c"
             },
             "scanDuration": {
@@ -83,6 +83,10 @@
             "scanInterval": {
               "type": "integer",
               "title": "Scan Interval (For Meter. Default is 60000ms)"
+            },
+            "openCloseThreshold": {
+              "type": "integer",
+              "title": "Open close threshold (For Curtain. Default is 5000ms)"
             }
           }
         }

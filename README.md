@@ -95,7 +95,7 @@ If it work, add devices.
 - `devices` - SwitchBot devices list.
 - `type` - Device type. Currently supports `bot`, `curtain` and `meter`.
 - `name` - Device name.
-- `bleMac` - Device mac address. You can find it in App settings.
+- `bleMac` - Device MAC address. You can find it in App settings.
 
 **Optional Settings**
 
