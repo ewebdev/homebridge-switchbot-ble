@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. This project uses [Semantic Versioning](https://semver.org/)
 
+## [Version 1.6.1](https://github.com/OpenWonderLabs/homebridge-switchbot-ble/releases/tag/v1.6.1) (2021-08-29)
+
+### Changes
+
+- Fixes FATAL ERROR:  ad_id is not defined
+
 ## [Version 1.6.0](https://github.com/OpenWonderLabs/homebridge-switchbot-ble/releases/tag/v1.6.0) (2021-08-26)
 
 ### Changes
