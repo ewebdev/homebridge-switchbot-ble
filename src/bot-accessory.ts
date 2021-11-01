@@ -13,6 +13,22 @@ import {
   CharacteristicEventTypes,
 } from "homebridge";
 
+const wait = ms => new Promise(r => setTimeout(r, ms));
+
+const retryOperation = (operation, delay, retries, attempt = 1) => new Promise((resolve, reject) => {
+  return operation(retries, attempt)
+    .then(resolve)
+    .catch((reason) => {
+      if (retries > 0) {
+        return wait(delay)
+          .then(retryOperation.bind(null, operation, delay, retries - 1, attempt + 1))
+          .then(resolve)
+          .catch(reject);
+      }
+      return reject(reason);
+    });
+});
+
 export class Bot implements AccessoryPlugin {
   private readonly log: Logging;
   private readonly bleMac: string;
@@ -53,8 +69,12 @@ export class Bot implements AccessoryPlugin {
         }
         // Target state has been changed.
         log.info("Target state of Bot setting: " + (targetState ? "ON" : "OFF"));
-        this.switchbot
-          .discover({ duration: this.scanDuration, model: "H", quick: true, id: this.bleMac })
+
+        retryOperation((retries, attempt) => {
+          log.info(`Scan attempt ${attempt} of ${retries}.`);
+          return this.switchbot
+            .discover({ duration: this.scanDuration, model: "H", quick: true, id: this.bleMac });
+        }, 1000, 3)
           .then((device_list: any) => {
             log.info("Scan done.");
             let targetDevice: any = null;
@@ -110,8 +130,20 @@ export class Bot implements AccessoryPlugin {
     log.info("Bot '%s' created!", name);
   }
 
+  async ccc(max: number, fn: { (): any; (): Promise<any>; }): Promise<null> {
+    return fn().catch(async (err: any) => {
+      if (max == 0) {
+        throw err;
+      }
+      this.log.info(err);
+      this.log.info("Retrying");
+      await this.switchbot.wait(1000);
+      return this.retry(max - 1, fn);
+    });
+  }
+
   async retry(max: number, fn: { (): any; (): Promise<any>; }): Promise<null> {
-    return fn().catch( async (err: any) => {
+    return fn().catch(async (err: any) => {
       if (max == 0) {
         throw err;
       }
