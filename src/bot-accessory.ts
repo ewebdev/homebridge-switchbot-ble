@@ -57,7 +57,7 @@ export class Bot implements AccessoryPlugin {
         this.retry(5, () => {
           return this.switchbot
             .discover({ duration: this.scanDuration, model: "H", quick: true, id: this.bleMac });
-        }, 300)
+        }, 500)
           .then((device_list: any) => {
             log.info("Scan done.");
             let targetDevice: any = null;

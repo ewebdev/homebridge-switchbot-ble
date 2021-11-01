@@ -1,7 +1,7 @@
 {
   "name": "@eweiss/homebridge-switchbot-ble",
   "displayName": "Homebridge SwitchBot BLE - @ewebdev Experiment",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "description": "Experimental Homebridge integration for SwitchBot BLE series products",
   "author": "Eyal Weiss <eyal1w@gmail.com> (https://github.com/ewebdev)",
   "license": "ISC",
