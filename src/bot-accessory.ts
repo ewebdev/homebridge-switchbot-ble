@@ -57,7 +57,7 @@ export class Bot implements AccessoryPlugin {
         this.retry(5, () => {
           return this.switchbot
             .discover({ duration: this.scanDuration, model: "H", quick: true, id: this.bleMac });
-        })
+        }, 300)
           .then((device_list: any) => {
             log.info("Scan done.");
             let targetDevice: any = null;
@@ -113,14 +113,14 @@ export class Bot implements AccessoryPlugin {
     log.info("Bot '%s' created!", name);
   }
 
-  async retry(max: number, fn: { (): any; (): Promise<any>; }): Promise<null> {
+  async retry(max: number, fn: { (): any; (): Promise<any>; }, wait=1000): Promise<null> {
     return fn().catch(async (err: any) => {
       if (max == 0) {
         throw err;
       }
       this.log.info(err);
       this.log.info("Retrying");
-      await this.switchbot.wait(1000);
+      await this.switchbot.wait(wait);
       return this.retry(max - 1, fn);
     });
   }

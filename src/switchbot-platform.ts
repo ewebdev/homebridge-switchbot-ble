@@ -51,7 +51,7 @@ class SwitchBotPlatform implements StaticPlatformPlugin {
     // probably parse config or something here
     this.config = config;
 
-    log.info("SwitchBot platform finished initializing!");
+    log.info("SwitchBot platform finished initializing (@ewebdev Experiment)!");
   }
 
   /*

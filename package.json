@@ -1,18 +1,18 @@
 {
-  "name": "@switchbot/homebridge-switchbot-ble",
-  "displayName": "Homebridge SwitchBot BLE",
+  "name": "@eweiss/homebridge-switchbot-ble",
+  "displayName": "Homebridge SwitchBot BLE (@ewebdev Experiment)",
   "version": "1.6.1",
-  "description": "Homebridge integration for SwitchBot BLE series products",
-  "author": "SwitchBot <support@wondertechlabs.com> (https://github.com/SwitchBot)",
+  "description": "Experimental Homebridge integration for SwitchBot BLE series products",
+  "author": "Eyal Weiss <eyal1w@gmail.com> (https://github.com/ewebdev)",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SwitchBot/homebridge-switchbot-ble.git"
+    "url": "git+https://github.com/ewebdev/homebridge-switchbot-ble.git"
   },
   "bugs": {
-    "url": "https://github.com/SwitchBot/homebridge-switchbot-ble/issues"
+    "url": "https://github.com/ewebdev/homebridge-switchbot-ble/issues"
   },
-  "homepage": "https://github.com/SwitchBot/homebridge-switchbot-ble#readme",
+  "homepage": "https://github.com/ewebdev/homebridge-switchbot-ble#readme",
   "engines": {
     "node": ">=14.17.3",
     "homebridge": ">=1.3.4"
