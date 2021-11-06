@@ -54,7 +54,7 @@ export class Bot implements AccessoryPlugin {
         // Target state has been changed.
         log.info("Target state of Bot setting: " + (targetState ? "ON" : "OFF"));
 
-        this.retry(5, () => {
+        this.retry(10, () => {
           return this.switchbot
             .discover({ duration: this.scanDuration, model: "H", quick: true, id: this.bleMac });
         }, 500)
