@@ -68,6 +68,7 @@ class SwitchBotPlatform implements StaticPlatformPlugin {
         this.log.debug(device.name);
         this.log.debug(device.bleMac);
         this.log.debug(device.scanDuration, typeof device.scanDuration);
+        this.log.debug(device.pressMode);
         let scanDuration: number = device.scanDuration || 1000;
         let scanInterval: number = device.scanInterval || 60000;
         if (scanInterval < scanDuration) {
@@ -75,14 +76,15 @@ class SwitchBotPlatform implements StaticPlatformPlugin {
         }
         switch (device.type) {
           case "bot":
-            deviceList.push(new Bot(hap, this.log, device.name, device.bleMac.toLowerCase(), scanDuration));
+            const pressMode: boolean = device.pressMode || false;
+            deviceList.push(new Bot(hap, this.log, device.name, device.bleMac.toLowerCase(), scanDuration, pressMode));
             break;
           case "curtain":
             const reverseDir: boolean = device.reverseDir || false;
             const moveTime: number = device.moveTime || 2000;
-            deviceList.push(new Curtain(hap, this.log, device.name, device.bleMac.toLowerCase(), 
+            deviceList.push(new Curtain(hap, this.log, device.name, device.bleMac.toLowerCase(),
               scanDuration, reverseDir, moveTime, device.scanInterval || 60000, device.openCloseThreshold || 5));
-            break; 
+            break;
           case "meter":
             deviceList.push(new Meter(hap, this.log, device.name, device.bleMac.toLowerCase(), scanDuration, scanInterval));
             break;
@@ -91,7 +93,7 @@ class SwitchBotPlatform implements StaticPlatformPlugin {
             break;
           case "contact":
             deviceList.push(new Contact(hap, this.log, device.name, device.bleMac.toLowerCase(), scanDuration, scanInterval));
-            break;    
+            break;
           default:
             break;
         }

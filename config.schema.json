@@ -87,6 +87,10 @@
             "openCloseThreshold": {
               "type": "integer",
               "title": "Open close threshold (For Curtain. Default is 5000ms)"
+            },
+            "pressMode": {
+              "type": "boolean",
+              "title": "Press mode (For Bot. Default is false)"
             }
           }
         }

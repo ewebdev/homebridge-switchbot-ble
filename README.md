@@ -68,7 +68,8 @@ If it work, add devices.
                 "type": "bot",
                 "name": "Bot 51",
                 "bleMac": "e7:4d:36:cf:9e:51",
-                "scanDuration": 2000
+                "scanDuration": 2000,
+                "pressMode": true
             },
             {
                 "type": "curtain",
@@ -106,6 +107,7 @@ If it work, add devices.
   - For a Meter, sets how frequently to scan in order to retrieve temperature and humidity values. Default is `60000` (unit: ms).
   - For a Curtain, sets how frequently to scan in order to retrieve the curtain position. Default is `60000` (unit: ms) when idle.
 - `openCloseThreshold` - Set the threshold before/after which the curtain is reported as fully open/closed to HomeKit. Default is `5`, so any position under 5% is reported as fully open and above 95% as fully closed.  
+- `pressMode` - Set to `true` to treat "Press mode" of Bot.
 
 Please note that:
 

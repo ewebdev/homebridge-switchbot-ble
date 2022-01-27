@@ -17,6 +17,7 @@ export class Bot implements AccessoryPlugin {
   private readonly log: Logging;
   private readonly bleMac: string;
   private readonly scanDuration: number;
+  private readonly pressMode: boolean;
   private readonly switchbot: any;
 
   private switchOn = false;
@@ -28,11 +29,12 @@ export class Bot implements AccessoryPlugin {
   private readonly botService: Service;
   private readonly informationService: Service;
 
-  constructor(hap: HAP, log: Logging, name: string, bleMac: string, scanDuration: number) {
+  constructor(hap: HAP, log: Logging, name: string, bleMac: string, scanDuration: number, pressMode: boolean) {
     this.log = log;
     this.name = name;
     this.bleMac = bleMac;
     this.scanDuration = scanDuration;
+    this.pressMode = pressMode;
     const SwitchBot = require("node-switchbot");
     this.switchbot = new SwitchBot();
 
@@ -88,7 +90,7 @@ export class Bot implements AccessoryPlugin {
           })
           .then(() => {
             log.info("Done.");
-            this.switchOn = targetState;
+            this.switchOn = this.pressMode ? false : targetState;
             this.runTimer = setTimeout(() => {
               this.botService?.getCharacteristic(hap.Characteristic.On).updateValue(this.switchOn);
             }, 500);
