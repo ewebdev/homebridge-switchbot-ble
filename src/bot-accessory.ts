@@ -77,7 +77,7 @@ export class Bot implements AccessoryPlugin {
               });
             } else {
               log.info(targetDevice.modelName + " (" + targetDevice.address + ") was found.");
-              // Set event handers
+              // Set event handlers
               targetDevice.onconnect = () => {
                 // log.info('Connected.');
               };

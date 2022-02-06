@@ -91,7 +91,7 @@ If it work, add devices.
 ]
 ```
 
-**Requird Settings**
+**Required Settings**
 
 - `devices` - SwitchBot devices list.
 - `type` - Device type. Currently supports `bot`, `curtain` and `meter`.
